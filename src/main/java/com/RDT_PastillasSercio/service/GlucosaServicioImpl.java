@@ -21,4 +21,9 @@ public class GlucosaServicioImpl implements GlucosaInterfaz {
        return glucosaDao.InsertarGlucosa(glucosa);
     }
 
+    @Override
+    public Response2<Boolean> EditarGlucosa(GlucosaModel glucosa) {
+      return glucosaDao.EditarGlucosa(glucosa);
+    }
+
 }

@@ -40,4 +40,25 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
 
     }
 
+    @Override
+    public Response2<Boolean> EditarGlucosa(GlucosaModel glucosa) {
+        Response2<Boolean> out;
+
+            try {
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+            .withProcedureName("SP_EditarGlucosa");
+
+            SqlParameterSource input = new MapSqlParameterSource() 
+                .addValue("p_id_glucosa", glucosa.getId_glucosa())
+                .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
+
+
+            jdbcCall.execute(input);
+            out = new Response2<>(HttpStatus.OK, "Glucosa actualizada correctamente", true);
+       } catch (Exception e) {
+           out = new Response2<>(e);
+       }
+         return out;
+    }
+
 }
