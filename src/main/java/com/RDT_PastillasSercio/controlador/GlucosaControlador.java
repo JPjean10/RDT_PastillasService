@@ -19,29 +19,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 @CrossOrigin("*")
 public class GlucosaControlador {
 
-
     @Qualifier("service")
     @Autowired
     GlucosaInterfaz glucosaServicio;
 
     @PostMapping(consumes = "application/json")
-    public ResponseEntity<?> InsertarGlucosa(@RequestBody GlucosaModel glucosa){
+    public ResponseEntity<?> InsertarGlucosa(@RequestBody GlucosaModel glucosa) {
         Response2<Boolean> out;
         out = glucosaServicio.InsertarGlucosa(glucosa);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
     @PutMapping(consumes = "application/json")
-    public ResponseEntity<?> EditarGlucosa(@RequestBody GlucosaModel glucosa){
+    public ResponseEntity<?> EditarGlucosa(@RequestBody GlucosaModel glucosa) {
         Response2<Boolean> out;
         out = glucosaServicio.EditarGlucosa(glucosa);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
     @PostMapping(path = "/Sincronizar", consumes = "application/json")
-    public ResponseEntity<?> SincronizarGlucosa(@RequestBody GlucosaModel glucosa){
+    public ResponseEntity<?> SincronizarGlucosaIsert(@RequestBody GlucosaModel glucosa) {
         Response2<Boolean> out;
-        out = glucosaServicio.SincronizarGlucosa(glucosa);
+        out = glucosaServicio.SincronizarGlucosaIsert(glucosa);
+        return ResponseEntity.status(out.getStatusCode()).body(out);
+    }
+
+    @PutMapping(path = "/Sincronizar", consumes = "application/json")
+    public ResponseEntity<?> SincronizarGlucosaActualizar(@RequestBody GlucosaModel glucosa) {
+        Response2<Boolean> out;
+        out = glucosaServicio.SincronizarGlucosaActualizar(glucosa);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 }

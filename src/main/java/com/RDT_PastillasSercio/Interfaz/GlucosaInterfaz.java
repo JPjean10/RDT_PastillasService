@@ -9,5 +9,7 @@ public interface GlucosaInterfaz {
  
     Response2<Boolean> EditarGlucosa (GlucosaModel glucosa);
 
-    Response2<Boolean> SincronizarGlucosa (GlucosaModel glucosa);
+    Response2<Boolean> SincronizarGlucosaIsert (GlucosaModel glucosa);
+
+    Response2<Boolean> SincronizarGlucosaActualizar (GlucosaModel glucosa);
 }

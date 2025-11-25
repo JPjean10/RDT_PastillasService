@@ -60,13 +60,12 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
         return out;
     }
 
-    @Override
-    public Response2<Boolean> SincronizarGlucosa(GlucosaModel glucosa) {
+    private Response2<Boolean> ejecutarSPGlucosa(String procedureName, GlucosaModel glucosa, String mensaje) {
         Response2<Boolean> out;
 
         try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName("SP_SincronizarGlucosa");
+                    .withProcedureName(procedureName);
 
             SqlParameterSource input = new MapSqlParameterSource()
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
@@ -75,10 +74,32 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
-            out = new Response2<>(HttpStatus.CREATED, "Glucosa sincronizada correctamente", true);
+
+            out = new Response2<>(HttpStatus.CREATED, mensaje, true);
         } catch (Exception e) {
             out = new Response2<>(e);
         }
+
         return out;
+    }
+
+    // 🔹 LLAMA AL MÉTODO PRIVADO CAMBIANDO SOLO EL SP
+    @Override
+    public Response2<Boolean> SincronizarGlucosaIsert(GlucosaModel glucosa) {
+        return ejecutarSPGlucosa(
+                "SP_SincronizarGlucosa",
+                glucosa,
+                "sincronización de glucosa insertada correctamente"
+        );
+    }
+
+    // 🔹 SOLO CAMBIAS EL SP QUE QUIERES USAR
+    @Override
+    public Response2<Boolean> SincronizarGlucosaActualizar(GlucosaModel glucosa) {
+        return ejecutarSPGlucosa(
+                "SP_ActualizarGlucosaSiExiste",
+                glucosa,
+                "sincronización de glucosa actualizada correctamente"
+        );
     }
 }
