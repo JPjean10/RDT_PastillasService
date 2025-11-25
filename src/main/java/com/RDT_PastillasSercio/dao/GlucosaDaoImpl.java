@@ -23,20 +23,20 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
     @Override
     public Response2<Boolean> InsertarGlucosa(GlucosaModel glucosa) {
         Response2<Boolean> out;
-       
+
         try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-            .withProcedureName("SP_InsertarGlucosa");
+                    .withProcedureName("SP_InsertarGlucosa");
 
-            SqlParameterSource input = new MapSqlParameterSource() 
-                .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
+            SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
 
             jdbcCall.execute(input);
             out = new Response2<>(HttpStatus.CREATED, "Glucosa insertada correctamente", true);
-       } catch (Exception e) {
-           out = new Response2<>(e);
-       }
-         return out;
+        } catch (Exception e) {
+            out = new Response2<>(e);
+        }
+        return out;
 
     }
 
@@ -44,21 +44,41 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
     public Response2<Boolean> EditarGlucosa(GlucosaModel glucosa) {
         Response2<Boolean> out;
 
-            try {
+        try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-            .withProcedureName("SP_EditarGlucosa");
+                    .withProcedureName("SP_EditarGlucosa");
 
-            SqlParameterSource input = new MapSqlParameterSource() 
-                .addValue("p_id_glucosa", glucosa.getId_glucosa())
-                .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
-
+            SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
+                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
 
             jdbcCall.execute(input);
             out = new Response2<>(HttpStatus.OK, "Glucosa actualizada correctamente", true);
-       } catch (Exception e) {
-           out = new Response2<>(e);
-       }
-         return out;
+        } catch (Exception e) {
+            out = new Response2<>(e);
+        }
+        return out;
     }
 
+    @Override
+    public Response2<Boolean> SincronizarGlucosa(GlucosaModel glucosa) {
+        Response2<Boolean> out;
+
+        try {
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withProcedureName("SP_SincronizarGlucosa");
+
+            SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
+                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
+                    .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_estado", glucosa.getEstado());
+
+            jdbcCall.execute(input);
+            out = new Response2<>(HttpStatus.CREATED, "Glucosa sincronizada correctamente", true);
+        } catch (Exception e) {
+            out = new Response2<>(e);
+        }
+        return out;
+    }
 }

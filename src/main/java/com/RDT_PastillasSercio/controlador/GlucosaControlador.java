@@ -37,4 +37,11 @@ public class GlucosaControlador {
         out = glucosaServicio.EditarGlucosa(glucosa);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
+
+    @PostMapping(path = "/Sincronizar", consumes = "application/json")
+    public ResponseEntity<?> SincronizarGlucosa(@RequestBody GlucosaModel glucosa){
+        Response2<Boolean> out;
+        out = glucosaServicio.SincronizarGlucosa(glucosa);
+        return ResponseEntity.status(out.getStatusCode()).body(out);
+    }
 }
