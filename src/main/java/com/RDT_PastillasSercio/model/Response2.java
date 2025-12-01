@@ -2,8 +2,8 @@ package com.RDT_PastillasSercio.model;
 
 import org.springframework.http.HttpStatus;
 
-import com.RDT_PastillasSercio.consts.UserMessageConst;
 import com.RDT_PastillasSercio.util.DateUtil;
+import com.RDT_PastillasSercio.util.consts.UserMessageConst;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 

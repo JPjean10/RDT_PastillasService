@@ -1,6 +1,6 @@
-package com.RDT_PastillasSercio.util;
+package com.RDT_PastillasSercio.util.consts;
 
-public class EnvConst {
+public class EnvironmentConst {
 
     public static final String DB_URL = "dbUrl";
     public static final String dbUsername = "dbUsername";

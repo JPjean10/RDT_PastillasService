@@ -1,4 +1,4 @@
-package com.RDT_PastillasSercio.consts;
+package com.RDT_PastillasSercio.util.consts;
 
 public class UserMessageConst {
 
