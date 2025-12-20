@@ -8,5 +8,10 @@ public class DbConst {
 
     // usuario
     public static final String SP_INSERTAR_USUARIO = "SP_InsertarUsuario";
-
+    public static final String SP_INISIAR_SESION = "SP_InisiarSesion";
+    // glocosa
+    public static final String SP_INSERTAR_GLUCOSA = "SP_InsertarGlucosa";
+    public static final String SP_EDITAR_GLUCOSA = "SP_EditarGlucosa";
+    public static final String SP_SINCRONIZAR_GLUCOSA_INSERTAR = "SP_SincronizarGlucosaIsert";
+    public static final String SP_SINCRONIZAR_GLUCOSA_ACTUALIZAR = "SP_SincronizarGlucosaActualizar";
 }

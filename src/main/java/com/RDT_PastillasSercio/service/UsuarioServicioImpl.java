@@ -1,5 +1,7 @@
 package com.RDT_PastillasSercio.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -20,6 +22,11 @@ public class UsuarioServicioImpl implements UsuarioInterfaz {
     @Override
     public Response2<Boolean> InsertarUsuario(UsuarioModel usuario) {
         return usuarioDao.InsertarUsuario(usuario);
+    }
+
+    @Override
+    public Response2<List<UsuarioModel>> Login(UsuarioModel usuario) {
+        return usuarioDao.Login(usuario);
     }
 
 }

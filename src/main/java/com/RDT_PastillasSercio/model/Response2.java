@@ -5,63 +5,71 @@ import org.springframework.http.HttpStatus;
 import com.RDT_PastillasSercio.util.DateUtil;
 import com.RDT_PastillasSercio.util.consts.UserMessageConst;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Response2<T> {
 
-    private boolean status;    
+    private boolean status;
 
     private String userMssg;
 
     private T data;
 
+    @JsonIgnore
     private String errorId;
 
+    @JsonIgnore
     private HttpStatus statusCode;
 
     @JsonIgnore
     private String errorMssg;
 
-
-    //***************************************************************
-    //***************************************************CONSTRUCTORS
-    //***************************************************************
+    // ***************************************************************
+    // ***************************************************CONSTRUCTORS
+    // ***************************************************************
     public Response2() {
         status = true;
         this.userMssg = UserMessageConst.SUCCESS;
         statusCode = HttpStatus.OK;
     }
-    
+
     public Response2(HttpStatus statusCode, String userMssg, boolean status) {
         this.statusCode = statusCode;
         this.userMssg = userMssg;
         this.status = status;
     }
 
-    //Exception
+    public Response2(HttpStatus statusCode, String userMssg, T data,boolean status) {
+        this.statusCode = statusCode;
+        this.userMssg = userMssg;
+        this.data = data;
+        this.status = status;
+    }
+
+    // Exception
     public Response2(Exception exception) {
         this(HttpStatus.INTERNAL_SERVER_ERROR, UserMessageConst.INTERNAL_SERVER_ERROR, false);
         setError(exception);
-    } 
-    
+    }
+
     public Response2(Exception exception, String userMssg) {
         this(HttpStatus.INTERNAL_SERVER_ERROR, userMssg, false);
         setError(exception);
-    }   
+    }
 
-    public String setError(Exception exception)
-    {
+    public String setError(Exception exception) {
         errorId = DateUtil.generateId();
-        
+
         errorMssg = " codError: " + errorId;
 
         try {
             StackTraceElement elemento = exception.getStackTrace()[0];
 
-                errorMssg += " | class: " + elemento.getClassName() +
-                " | line: " + elemento.getLineNumber() +
-                " | method: " + elemento.getMethodName() +
-                " | error: "+ exception.getMessage();
+            errorMssg += " | class: " + elemento.getClassName() +
+                    " | line: " + elemento.getLineNumber() +
+                    " | method: " + elemento.getMethodName() +
+                    " | error: " + exception.getMessage();
         } catch (Exception e) {
             errorMssg += " | json: -";
         }
@@ -69,7 +77,7 @@ public class Response2<T> {
         return errorMssg;
     }
 
-    //***************************************************************
+    // ***************************************************************
     public Response2(T data, String userMessage) {
         this.data = data;
         this.status = data != null;
@@ -89,23 +97,23 @@ public class Response2<T> {
         this.userMssg = userMssg;
         this.status = statusCode == HttpStatus.OK;
     }
-    
-    //Exception
+
+    // Exception
     public Response2(Exception exception, int errorId_) {
         errorId = DateUtil.generateId();
         status = false;
         errorMssg = " | error: " + exception.getLocalizedMessage();
 
-        if(errorId_ == 45000){
-            statusCode = HttpStatus.OK;
+        if (errorId_ == 45000) {
+            statusCode = HttpStatus.CONFLICT;
             userMssg = exception.getCause().getMessage();
-        }else{
+        } else {
             statusCode = HttpStatus.INTERNAL_SERVER_ERROR;
             userMssg = UserMessageConst.INTERNAL_SERVER_ERROR;
         }
-    }    
+    }
 
-    public <Y>Response2(Response2<Y> in){
+    public <Y> Response2(Response2<Y> in) {
         status = in.isStatus();
         userMssg = in.getUserMssg();
         errorId = in.getErrorId();
@@ -113,9 +121,9 @@ public class Response2<T> {
         errorMssg = in.getErrorMssg();
     }
 
-    //***************************************************************
-    //*********************************************GETTERS AND SETTER
-    //***************************************************************
+    // ***************************************************************
+    // *********************************************GETTERS AND SETTER
+    // ***************************************************************
     public boolean isStatus() {
         return status;
     }

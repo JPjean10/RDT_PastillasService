@@ -7,12 +7,13 @@ import org.springframework.stereotype.Service;
 import com.RDT_PastillasSercio.Interfaz.GlucosaInterfaz;
 import com.RDT_PastillasSercio.model.GlucosaModel;
 import com.RDT_PastillasSercio.model.Response2;
+import com.RDT_PastillasSercio.util.consts.CommonConsts;
 
-@Qualifier("service")
+@Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
 @Service
 public class GlucosaServicioImpl implements GlucosaInterfaz {
 
-     @Qualifier("dao")
+     @Qualifier(CommonConsts.RDT_PASTILLAS_DAO)
      @Autowired
      GlucosaInterfaz glucosaDao;
 

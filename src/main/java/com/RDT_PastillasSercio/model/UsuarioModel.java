@@ -8,6 +8,8 @@ public class UsuarioModel {
 
     private String contrasena;
 
+    private String nombre;
+
     private String FechaHoraCreacion;
 
     public Long getId_usuario() {
@@ -27,6 +29,12 @@ public class UsuarioModel {
     }
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
     public String getFechaHoraCreacion() {
         return FechaHoraCreacion;

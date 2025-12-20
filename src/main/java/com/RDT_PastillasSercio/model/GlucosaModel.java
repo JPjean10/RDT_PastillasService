@@ -2,16 +2,23 @@ package com.RDT_PastillasSercio.model;
 
 public class GlucosaModel {
 
-    private Integer id_glucosa;
+    private Long id_glucosa;
+    private Long id_usuario;
     private int nivel_glucosa;
     private String fecha_hora_creacion;
     private Boolean estado;
 
-    public Integer getId_glucosa() {
+    public Long getId_glucosa() {
         return id_glucosa;
     }
-    public void setId_glucosa(Integer id_glucosa) {
+    public void setId_glucosa(Long id_glucosa) {
         this.id_glucosa = id_glucosa;
+    }
+    public Long getId_usuario() {
+        return id_usuario;
+    }
+    public void setId_usuario(Long id_usuario) {
+        this.id_usuario = id_usuario;
     }
     public int getNivel_glucosa() {
         return nivel_glucosa;

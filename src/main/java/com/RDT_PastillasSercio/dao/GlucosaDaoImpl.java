@@ -12,8 +12,10 @@ import org.springframework.stereotype.Repository;
 import com.RDT_PastillasSercio.Interfaz.GlucosaInterfaz;
 import com.RDT_PastillasSercio.model.GlucosaModel;
 import com.RDT_PastillasSercio.model.Response2;
+import com.RDT_PastillasSercio.util.consts.CommonConsts;
+import com.RDT_PastillasSercio.util.consts.DbConst;
 
-@Qualifier("dao")
+@Qualifier(CommonConsts.RDT_PASTILLAS_DAO)
 @Repository
 public class GlucosaDaoImpl implements GlucosaInterfaz {
 
@@ -26,9 +28,11 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
 
         try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName("SP_InsertarGlucosa");
+                    .withProcedureName(DbConst.SP_INSERTAR_GLUCOSA);
 
             SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_usuario", glucosa.getId_usuario())
+                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
 
             jdbcCall.execute(input);
@@ -46,9 +50,10 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
 
         try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName("SP_EditarGlucosa");
+                    .withProcedureName(DbConst.SP_EDITAR_GLUCOSA);
 
             SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_usuario", glucosa.getId_usuario())
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
 
@@ -60,46 +65,49 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
         return out;
     }
 
-    private Response2<Boolean> ejecutarSPGlucosa(String procedureName, GlucosaModel glucosa, String mensaje) {
+       @Override
+    public Response2<Boolean> SincronizarGlucosaIsert(GlucosaModel glucosa) {
         Response2<Boolean> out;
 
-        try {
+                try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName(procedureName);
+                    .withProcedureName(DbConst.SP_SINCRONIZAR_GLUCOSA_INSERTAR);
 
             SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_usuario", glucosa.getId_usuario())
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
                     .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
-
-            out = new Response2<>(HttpStatus.CREATED, mensaje, true);
+            out = new Response2<>(HttpStatus.CREATED, "Glucosa insertada correctamente", true);
         } catch (Exception e) {
             out = new Response2<>(e);
         }
-
         return out;
     }
 
-    // 🔹 LLAMA AL MÉTODO PRIVADO CAMBIANDO SOLO EL SP
-    @Override
-    public Response2<Boolean> SincronizarGlucosaIsert(GlucosaModel glucosa) {
-        return ejecutarSPGlucosa(
-                "SP_SincronizarGlucosa",
-                glucosa,
-                "sincronización de glucosa insertada correctamente"
-        );
-    }
-
-    // 🔹 SOLO CAMBIAS EL SP QUE QUIERES USAR
     @Override
     public Response2<Boolean> SincronizarGlucosaActualizar(GlucosaModel glucosa) {
-        return ejecutarSPGlucosa(
-                "SP_ActualizarGlucosaSiExiste",
-                glucosa,
-                "sincronización de glucosa actualizada correctamente"
-        );
+        Response2<Boolean> out;
+
+                try {
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withProcedureName(DbConst.SP_SINCRONIZAR_GLUCOSA_ACTUALIZAR);
+
+            SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_usuario", glucosa.getId_usuario())
+                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
+                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
+                    .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_estado", glucosa.getEstado());
+
+            jdbcCall.execute(input);
+            out = new Response2<>(HttpStatus.CREATED, "Glucosa insertada correctamente", true);
+        } catch (Exception e) {
+            out = new Response2<>(e);
+        }
+        return out;
     }
 }

@@ -10,44 +10,71 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.RDT_PastillasSercio.Interfaz.GlucosaInterfaz;
+import com.RDT_PastillasSercio.Interfaz.LogInterfaz;
 import com.RDT_PastillasSercio.model.GlucosaModel;
+import com.RDT_PastillasSercio.model.LogModel;
 import com.RDT_PastillasSercio.model.Response2;
+import com.RDT_PastillasSercio.util.consts.ApiConst;
+import com.RDT_PastillasSercio.util.consts.CommonConsts;
+
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
-@RequestMapping("/Glucosa")
+@RequestMapping(ApiConst.GLUCOSA)
 @CrossOrigin("*")
 public class GlucosaControlador {
 
-    @Qualifier("service")
+    @Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
     @Autowired
     GlucosaInterfaz glucosaServicio;
 
-    @PostMapping(consumes = "application/json")
-    public ResponseEntity<?> InsertarGlucosa(@RequestBody GlucosaModel glucosa) {
+    @Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
+    @Autowired
+    private LogInterfaz serviceLog;
+
+    @PostMapping(produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> InsertarGlucosa(HttpServletRequest http,@RequestBody GlucosaModel glucosa) {
+        LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
+        
         Response2<Boolean> out;
         out = glucosaServicio.InsertarGlucosa(glucosa);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
-    @PutMapping(consumes = "application/json")
-    public ResponseEntity<?> EditarGlucosa(@RequestBody GlucosaModel glucosa) {
+    @PutMapping(produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> EditarGlucosa(HttpServletRequest http,@RequestBody GlucosaModel glucosa){
+    LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
+
         Response2<Boolean> out;
         out = glucosaServicio.EditarGlucosa(glucosa);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
-    @PostMapping(path = "/Sincronizar", consumes = "application/json")
-    public ResponseEntity<?> SincronizarGlucosaIsert(@RequestBody GlucosaModel glucosa) {
+    @PostMapping(value = ApiConst.SINCRONIZAR, produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> SincronizarGlucosaIsert(HttpServletRequest http,@RequestBody GlucosaModel glucosa) {
+        LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
+
         Response2<Boolean> out;
         out = glucosaServicio.SincronizarGlucosaIsert(glucosa);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
-    @PutMapping(path = "/Sincronizar", consumes = "application/json")
-    public ResponseEntity<?> SincronizarGlucosaActualizar(@RequestBody GlucosaModel glucosa) {
+    @PutMapping(value = ApiConst.SINCRONIZAR, produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> SincronizarGlucosaActualizar(HttpServletRequest http,@RequestBody GlucosaModel glucosa) {
+        LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
+
         Response2<Boolean> out;
         out = glucosaServicio.SincronizarGlucosaActualizar(glucosa);
+        
+        serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 }
