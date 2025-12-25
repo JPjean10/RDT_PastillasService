@@ -5,54 +5,42 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.RDT_PastillasSercio.Interfaz.GlucosaInterfaz;
 import com.RDT_PastillasSercio.Interfaz.LogInterfaz;
-import com.RDT_PastillasSercio.model.GlucosaModel;
+import com.RDT_PastillasSercio.Interfaz.PresionInterfaz;
 import com.RDT_PastillasSercio.model.LogModel;
+import com.RDT_PastillasSercio.model.PresionModel;
 import com.RDT_PastillasSercio.model.Response2;
 import com.RDT_PastillasSercio.util.consts.ApiConst;
 import com.RDT_PastillasSercio.util.consts.CommonConsts;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import org.springframework.web.bind.annotation.RequestBody;
-
 @RestController
-@RequestMapping(ApiConst.GLUCOSA)
+@RequestMapping(ApiConst.PRESION)
 @CrossOrigin("*")
-public class GlucosaControlador {
-
-    @Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
-    @Autowired
-    GlucosaInterfaz glucosaServicio;
+public class PresionControlador {
 
     @Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
     @Autowired
     private LogInterfaz serviceLog;
 
+    @Qualifier(CommonConsts.RDT_PASTILLAS_SERVICE)
+    @Autowired
+    PresionInterfaz presionServicio;
+
     @PostMapping(produces = ApiConst.PRODUCES)
-    public ResponseEntity<?> InsertarGlucosa(HttpServletRequest http,@RequestBody GlucosaModel glucosa) {
-        LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
-        
+    public ResponseEntity<?> InsertarPresion(HttpServletRequest http, @RequestBody PresionModel presion) {
+        LogModel logModel = serviceLog.setRequestData(http, presion, presion.getId_usuario());
+
         Response2<Boolean> out;
-        out = glucosaServicio.InsertarGlucosa(glucosa);
+        out = presionServicio.InsertarPresion(presion);
 
         serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
-    @PutMapping(produces = ApiConst.PRODUCES)
-    public ResponseEntity<?> EditarGlucosa(HttpServletRequest http,@RequestBody GlucosaModel glucosa){
-    LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
-
-        Response2<Boolean> out;
-        out = glucosaServicio.EditarGlucosa(glucosa);
-
-        serviceLog.setResponseDataAndSave(logModel, out);
-        return ResponseEntity.status(out.getStatusCode()).body(out);
-    }
 }

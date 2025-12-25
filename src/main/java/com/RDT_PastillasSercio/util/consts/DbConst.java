@@ -14,4 +14,10 @@ public class DbConst {
     public static final String SP_EDITAR_GLUCOSA = "SP_EditarGlucosa";
     public static final String SP_SINCRONIZAR_GLUCOSA_INSERTAR = "SP_SincronizarGlucosaIsert";
     public static final String SP_SINCRONIZAR_GLUCOSA_ACTUALIZAR = "SP_SincronizarGlucosaActualizar";
+
+    // presion
+    public static final String SP_INSERTAR_PRESION = "SP_InsertarPresion";
+    public static final String SP_EDITAR_PRESION = "SP_EditarPresion";
+    public static final String SP_SINCRONIZAR_PRESION_INSERTAR = "SP_SincronizarPresionIsert";
+    public static final String SP_SINCRONIZAR_PRESION_ACTUALIZAR = "SP_SincronizarPresionActualizar";
 }

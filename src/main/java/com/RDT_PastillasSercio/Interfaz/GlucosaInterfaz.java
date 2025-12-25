@@ -8,8 +8,4 @@ public interface GlucosaInterfaz {
     Response2<Boolean> InsertarGlucosa(GlucosaModel glucosa);
  
     Response2<Boolean> EditarGlucosa (GlucosaModel glucosa);
-
-    Response2<Boolean> SincronizarGlucosaIsert (GlucosaModel glucosa);
-
-    Response2<Boolean> SincronizarGlucosaActualizar (GlucosaModel glucosa);
 }

@@ -15,4 +15,7 @@ public class ApiConst {
 
     public static final String SINCRONIZAR = "/Sincronizar";
 
+    // presion
+    public static final String PRESION = "presion";
+
 }

@@ -33,7 +33,9 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
             SqlParameterSource input = new MapSqlParameterSource()
                     .addValue("p_id_usuario", glucosa.getId_usuario())
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
-                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
+                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
+                    .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
             out = new Response2<>(HttpStatus.CREATED, "Glucosa insertada correctamente", true);
@@ -49,50 +51,6 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
         Response2<Boolean> out;
 
         try {
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName(DbConst.SP_EDITAR_GLUCOSA);
-
-            SqlParameterSource input = new MapSqlParameterSource()
-                    .addValue("p_id_usuario", glucosa.getId_usuario())
-                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
-                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa());
-
-            jdbcCall.execute(input);
-            out = new Response2<>(HttpStatus.OK, "Glucosa actualizada correctamente", true);
-        } catch (Exception e) {
-            out = new Response2<>(e);
-        }
-        return out;
-    }
-
-       @Override
-    public Response2<Boolean> SincronizarGlucosaIsert(GlucosaModel glucosa) {
-        Response2<Boolean> out;
-
-                try {
-            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
-                    .withProcedureName(DbConst.SP_SINCRONIZAR_GLUCOSA_INSERTAR);
-
-            SqlParameterSource input = new MapSqlParameterSource()
-                    .addValue("p_id_usuario", glucosa.getId_usuario())
-                    .addValue("p_id_glucosa", glucosa.getId_glucosa())
-                    .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
-                    .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
-                    .addValue("p_estado", glucosa.getEstado());
-
-            jdbcCall.execute(input);
-            out = new Response2<>(HttpStatus.CREATED, "Glucosa insertada correctamente", true);
-        } catch (Exception e) {
-            out = new Response2<>(e);
-        }
-        return out;
-    }
-
-    @Override
-    public Response2<Boolean> SincronizarGlucosaActualizar(GlucosaModel glucosa) {
-        Response2<Boolean> out;
-
-                try {
             SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
                     .withProcedureName(DbConst.SP_SINCRONIZAR_GLUCOSA_ACTUALIZAR);
 
