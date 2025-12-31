@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,6 +39,17 @@ public class PresionControlador {
 
         Response2<Boolean> out;
         out = presionServicio.InsertarPresion(presion);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
+        return ResponseEntity.status(out.getStatusCode()).body(out);
+    }
+
+    @PutMapping(produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> EditarPresion(HttpServletRequest http, @RequestBody PresionModel presion) {
+        LogModel logModel = serviceLog.setRequestData(http, presion, presion.getId_usuario());
+
+        Response2<Boolean> out;
+        out = presionServicio.EditarPresion(presion);
 
         serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);

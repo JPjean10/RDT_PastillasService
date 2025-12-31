@@ -55,4 +55,15 @@ public class GlucosaControlador {
         serviceLog.setResponseDataAndSave(logModel, out);
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
+
+        @PostMapping(value = "sincronizar", produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> SincronizarGlucosa(HttpServletRequest http,@RequestBody GlucosaModel glucosa) {
+        LogModel logModel = serviceLog.setRequestData(http, glucosa, glucosa.getId_usuario());
+        
+        Response2<Boolean> out;
+        out = glucosaServicio.SincronizarGlucosa(glucosa);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
+        return ResponseEntity.status(out.getStatusCode()).body(out);
+    }
 }
