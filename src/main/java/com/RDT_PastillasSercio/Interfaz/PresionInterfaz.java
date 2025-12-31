@@ -8,4 +8,6 @@ public interface PresionInterfaz {
     Response2<Boolean> InsertarPresion(PresionModel presion);
     Response2<Boolean> EditarPresion (PresionModel presion);
 
+    Response2<Boolean> SincronizarPresion(PresionModel presion);
+
 }

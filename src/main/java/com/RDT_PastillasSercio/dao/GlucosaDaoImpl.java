@@ -85,7 +85,7 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
-            out = new Response2<>(HttpStatus.OK, "Glucosa sincronizada correctamente", true);
+            out = new Response2<>(HttpStatus.OK, "Sincronizacion de glucosa realizada correctamente", true);
         } catch (Exception e) {
             out = new Response2<>(e);
         }

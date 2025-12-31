@@ -17,4 +17,5 @@ public class DbConst {
     // presion
     public static final String SP_INSERTAR_PRESION = "SP_InsertarPresion";
     public static final String SP_EDITAR_PRESION = "SP_EditarPresion";
+    public static final String SP_SINCRONIZAR_PRESION = "SP_SincronizarPresion";
 }

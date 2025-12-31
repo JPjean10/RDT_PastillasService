@@ -72,4 +72,30 @@ public class PresionDaoImpl implements PresionInterfaz {
         return out;
     }
 
+    @Override
+    public Response2<Boolean> SincronizarPresion(PresionModel presion) {
+        Response2<Boolean> out;
+
+        try {
+            SimpleJdbcCall jdbcCall = new SimpleJdbcCall(jdbcTemplate)
+                    .withProcedureName(DbConst.SP_SINCRONIZAR_PRESION);
+
+
+            SqlParameterSource input = new MapSqlParameterSource()
+                    .addValue("p_id_usuario", presion.getId_usuario())
+                    .addValue("p_id_presion", presion.getId_presion())
+                    .addValue("p_sys", presion.getSys())
+                    .addValue("p_dia", presion.getDia())
+                    .addValue("p_pul", presion.getPul())
+                    .addValue("p_fecha_hora_creacion", presion.getFecha_hora_creacion())
+                    .addValue("p_estado", presion.isEstado());
+
+            jdbcCall.execute(input);
+            out = new Response2<>(HttpStatus.OK, "Sincronizacion de presion realizada correctamente", true);
+        } catch (Exception e) {
+            out = new Response2<>(e);
+        }
+        return out;
+    }
+
 }

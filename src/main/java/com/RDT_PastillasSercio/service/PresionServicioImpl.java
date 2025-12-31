@@ -26,5 +26,10 @@ public class PresionServicioImpl implements PresionInterfaz {
     public Response2<Boolean> EditarPresion(PresionModel presion) {
         return presionDao.EditarPresion(presion);
     }
+
+    @Override
+    public Response2<Boolean> SincronizarPresion(PresionModel presion) {
+        return presionDao.SincronizarPresion(presion);
+    }
     
 }

@@ -55,4 +55,15 @@ public class PresionControlador {
         return ResponseEntity.status(out.getStatusCode()).body(out);
     }
 
+    @PostMapping(value = "sincronizar", produces = ApiConst.PRODUCES)
+    public ResponseEntity<?> SincronizarPresion(HttpServletRequest http, @RequestBody PresionModel presion) {
+        LogModel logModel = serviceLog.setRequestData(http, presion, presion.getId_usuario());
+
+        Response2<Boolean> out;
+        out = presionServicio.SincronizarPresion(presion);
+
+        serviceLog.setResponseDataAndSave(logModel, out);
+        return ResponseEntity.status(out.getStatusCode()).body(out);
+    }
+
 }
