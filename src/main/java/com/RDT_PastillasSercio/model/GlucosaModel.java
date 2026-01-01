@@ -6,6 +6,7 @@ public class GlucosaModel {
     private Long id_usuario;
     private int nivel_glucosa;
     private String fecha_hora_creacion;
+    private Boolean en_ayunas;
     private Boolean estado;
 
     public Long getId_glucosa() {
@@ -31,6 +32,12 @@ public class GlucosaModel {
     }
     public void setFecha_hora_creacion(String fecha_hora_creacion) {
         this.fecha_hora_creacion = fecha_hora_creacion;
+    }
+    public Boolean getEn_ayunas() {
+        return en_ayunas;
+    }
+    public void setEn_ayunas(Boolean en_ayunas) {
+        this.en_ayunas = en_ayunas;
     }
     public Boolean getEstado() {
         return estado;

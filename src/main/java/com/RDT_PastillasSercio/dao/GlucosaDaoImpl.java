@@ -35,6 +35,7 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
                     .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_en_ayunas", glucosa.getEn_ayunas())
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
@@ -59,6 +60,7 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
                     .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_en_ayunas", glucosa.getEn_ayunas())
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
@@ -82,6 +84,7 @@ public class GlucosaDaoImpl implements GlucosaInterfaz {
                     .addValue("p_id_glucosa", glucosa.getId_glucosa())
                     .addValue("p_nivel_glucosa", glucosa.getNivel_glucosa())
                     .addValue("p_fecha_hora_creacion", glucosa.getFecha_hora_creacion())
+                    .addValue("p_en_ayunas", glucosa.getEn_ayunas())
                     .addValue("p_estado", glucosa.getEstado());
 
             jdbcCall.execute(input);
